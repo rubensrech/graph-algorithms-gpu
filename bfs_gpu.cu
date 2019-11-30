@@ -74,10 +74,8 @@ int main(int argc, char **argv){
     bool *visited, *visited_d;
 
     cudaMalloc(&graph_d, nNodes * nNodes * sizeof(int));
-
-    for (int i = 0; i < nNodes; i++) {
-        cudaMemcpy(&graph_d[i], graph[i], nNodes * sizeof(int), cudaMemcpyHostToDevice);
-    }
+    for (int i = 0; i < nNodes; i++)
+        cudaMemcpy(&graph_d[i * nNodes], graph[i], nNodes * sizeof(int), cudaMemcpyHostToDevice);
 
     running = new bool[1];
     *running = true;
@@ -92,7 +90,6 @@ int main(int argc, char **argv){
     clockBegin = GetTime();
     
 	while (*running) {
-        cout << "here" << endl;
         cudaMemcpy(running_d, &false_val, 1 * sizeof(bool), cudaMemcpyHostToDevice);
         int blockSize = 32;
         int numBlocks = (nNodes + blockSize - 1) / blockSize;
