@@ -3,7 +3,7 @@ GPU=0
 TARGETS=bfs floyd
 
 ifeq ($(GPU), 1)
-	TARGETS+= bfs_gpu
+	TARGETS+= bfs_gpu floyd_gpu
 endif
 
 ARCH= -gencode arch=compute_60,code=sm_60 \
@@ -24,5 +24,8 @@ floyd: floyd.cpp
 bfs_gpu: bfs_gpu.cu
 	nvcc $(ARCH) --compiler-options "$(CFLAGS)" $^ -o $@
 
+floyd_gpu: floyd_gpu.cu
+	nvcc $(ARCH) --compiler-options "$(CFLAGS)" $^ -o $@
+
 clean:
-	rm -f bfs floyd
+	rm -f bfs floyd bfs_gpu floyd_gpu
