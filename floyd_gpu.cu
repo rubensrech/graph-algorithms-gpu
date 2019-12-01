@@ -107,7 +107,8 @@ int main(int argc, char **argv){
     clockBegin = GetTime();
     dim3 blockSize(32, 32);
     dim3 numBlocks((nNodes + blockSize.x - 1) / blockSize.x, (nNodes + blockSize.y - 1) / blockSize.y);
-    floydWarshall_kernel<<<numBlocks, blockSize>>>(dist_d, nNodes);  
+    floydWarshall_kernel<<<numBlocks, blockSize>>>(dist_d, nNodes);
+    cudaDeviceSynchronize();
     timeElapsed = (GetTime() - clockBegin)/1000000;
     
     for (int i = 0; i < nNodes; i++)

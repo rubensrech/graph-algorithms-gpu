@@ -97,6 +97,7 @@ int main(int argc, char **argv){
         cudaMemcpy(running, running_d, 1 * sizeof(bool), cudaMemcpyDeviceToHost);
     }
 
+    cudaDeviceSynchronize();
     timeElapsed = (GetTime() - clockBegin)/1000000;
     
     cudaMemcpy(visited, visited_d, nNodes * sizeof(bool), cudaMemcpyDeviceToHost);
