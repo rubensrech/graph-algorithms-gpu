@@ -11,6 +11,7 @@ using namespace std;
 value.This value will be used for  
 vertices not connected to each other */
 #define INF 99999  
+#define DEBUG 0
   
 // A function to print the solution matrix  
 void printSolution(int ** dist, int nNodes);  
@@ -114,10 +115,18 @@ int main(int argc, char **argv){
     for (int i = 0; i < nNodes; i++)
         cudaMemcpy(dist[i], &dist_d[i * nNodes], nNodes * sizeof(int), cudaMemcpyDeviceToHost);
 
-    // Print the shortest distance matrix  
-    printSolution(dist, nNodes);  
+    #if DEBUG == 1
+        // Print the shortest distance matrix  
+        printSolution(dist, nNodes);  
+    #endif
 
-    printf("Computation time: %5lf\n", timeElapsed);
+    printf("%5lf\n", timeElapsed);
+
+    for (int i = 0; i < nNodes; i++) {
+        free(graph[i]);
+        free(dist[i]);
+    }
+    cudaFree(dist_d);
 
     return 0;  
 }    

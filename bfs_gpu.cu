@@ -9,6 +9,7 @@ using namespace std;
 
 #define INF 99999
 #define GOAL 5000
+#define DEBUG 0
 
 double GetTime(void)
 {
@@ -101,13 +102,19 @@ int main(int argc, char **argv){
     timeElapsed = (GetTime() - clockBegin)/1000000;
     
     cudaMemcpy(visited, visited_d, nNodes * sizeof(bool), cudaMemcpyDeviceToHost);
-    for (int i = 0; i < nNodes; i++)
-        cout << "node " << i << ": " << visited[i] << endl;
+    #if DEBUG == 1
+        for (int i = 0; i < nNodes; i++)
+            cout << "node " << i << ": " << visited[i] << endl;
+    #endif
         
-    printf("Total time: %5lf\n", timeElapsed);
+    printf("%5lf\n", timeElapsed);
 
 	for(int i = 0; i < nNodes; i++)
 		free(graph[i]);
-	free(visited);
+    free(visited);
+    free(running);
+    cudaFree(visited_d);
+    cudaFree(running_d);
+    cudaFree(graph_d);
 }
 

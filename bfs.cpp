@@ -8,6 +8,7 @@ using namespace std;
 
 #define INF 99999
 #define GOAL 5000
+#define DEBUG 0
 
 double GetTime(void)
 {
@@ -61,7 +62,9 @@ int main(int argc, char **argv){
 	while(!q.empty()){
 		int v = q.front();
 		q.pop();
-		cout << "visited " << v << endl;
+        #if DEBUG == 1
+		    cout << "visited " << v << endl;
+        #endif
 		if(v == GOAL)
 		{
 			cout << "Found " << GOAL << endl;
@@ -79,7 +82,7 @@ int main(int argc, char **argv){
 	}
 
     timeElapsed = (GetTime() - clockBegin)/1000000;
-	printf("Total time: %5lf\n", timeElapsed);
+	printf("%5lf\n", timeElapsed);
 
 	for(int i = 0; i < nNodes; i++)
 		free(graph[i]);

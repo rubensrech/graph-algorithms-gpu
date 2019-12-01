@@ -9,6 +9,7 @@ using namespace std;
 value.This value will be used for  
 vertices not connected to each other */
 #define INF 99999  
+#define DEBUG 0
   
 // A function to print the solution matrix  
 void printSolution(int ** dist, int nNodes);  
@@ -71,10 +72,12 @@ int main(int argc, char **argv){
     floydWarshall(graph, dist, nNodes);  
 	timeElapsed = (GetTime() - clockBegin)/1000000;
 
-    // Print the shortest distance matrix  
-    printSolution(dist, nNodes);  
+    #if DEBUG == 1
+        // Print the shortest distance matrix  
+        printSolution(dist, nNodes);  
+    #endif
 
-    printf("Computation time: %5lf\n", timeElapsed);
+    printf("%5lf\n", timeElapsed);
 
 
     return 0;  
