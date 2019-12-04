@@ -8,7 +8,6 @@ using namespace std;
 
 #define INF 99999
 #define GOAL 5000
-#define DEBUG 0
 
 double GetTime(void)
 {
